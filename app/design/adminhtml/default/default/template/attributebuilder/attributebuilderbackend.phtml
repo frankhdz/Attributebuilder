@@ -1,0 +1,77 @@
+<h1>Attribute Builder</h1>
+<?php 
+$attributelist = Mage::getResourceModel('catalog/product_attribute_collection')
+    ->getItems();
+
+?>
+<div style="border-style:solid;
+border-width:1px;
+padding:20px
+">
+	<form id="attributebuilder_form" name="attributebuilder_form" action="<?=$this->getUrl('*/*/save')?>" method="post">
+ <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+<fieldset><h4>Attribute List Comma Separated</h4><ul><li>
+ 
+<?php 
+
+
+
+
+//if(count($this->getGroups())>1): ?>
+<div  style="margin-left:15px">
+    <label for="select-attribute"><?php echo $this->__('* Select Attribute') ?>: </label>
+    <select id="select-attribute" name="selectattribute" >
+        <option>Select an Attribute</option>
+    <?php foreach ($attributelist as $attribute): ?>
+        <?php if ($attribute->getFrontendLabel() != ''): ?>
+        <option value="<?php echo $attribute->getAttributecode() ?>"><?php echo $attribute->getFrontendLabel() ?></option>
+    <?php endif ?>
+    <?php endforeach; ?>
+    
+        
+    
+    </select>
+</div>
+<?php //endif; ?>
+ 
+ 
+<div>         <label for="csvvalues">* Attribute Values</label>
+ 
+<textarea name="csvvalues" id="csvvalues" title="csvvalues" style="height:100px;" cols="50" rows="3"></textarea>
+ 
+</div></li>
+</ul></fieldset><div><p>* Required Fields</p>
+ <button onclick="attributebuilderForm.submit()" style="margin-top:10px;" class="scalable save" type="button"><span>Save Attribute Options</span></button>
+ 
+</div></form></div>
+
+<div style="margin-top:40px;
+border-style:solid;
+border-width:1px;
+padding:20px">
+	
+	<h4>Delete an Attributes options</h4>
+	<form id='attributedelete_form' name="attributedelete_form" action="<?=$this->getUrl('*/*/clearattributeoptions')?>" method="post"> 
+		<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+		 <label for="select-attribute"><?php echo $this->__('* Select Attribute to clear') ?>: </label>
+    <select id="select-attribute" name="selectattribute" >
+        <option>Select an Attribute</option>
+    <?php foreach ($attributelist as $attribute): ?>
+        <?php if ($attribute->getFrontendLabel() != ''): ?>
+        <option value="<?php echo $attribute->getAttributecode() ?>"><?php echo $attribute->getFrontendLabel() ?></option>
+    <?php endif ?>
+    <?php endforeach; ?>
+     </select>
+
+     <div style="margin-top:10px;">
+    	<button onclick="attributedeleterForm.submit()" class="scalable save" type="button"><span>Delete Attribute Options</span></button>
+	</div>
+	</form>
+
+</div>
+
+
+<script type="text/javascript">
+    var attributebuilderForm = new varienForm('attributebuilder_form');
+    var attributedeleterForm = new varienForm('attributedelete_form');
+</script>
